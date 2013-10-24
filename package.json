@@ -12,6 +12,7 @@
     "should": "~2.0.2"
   },
   "dependencies": {
-    "apac": "0.0.13"
+    "apac": "0.0.13",
+    "underscore": "~1.5.2"
   }
 }

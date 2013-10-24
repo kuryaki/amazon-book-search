@@ -38,7 +38,7 @@ describe('Search', function() {
 
 });
 
-describe('Results', function(){
+describe('Results,', function(){
   before(function(done){
     var self = this;
     app.search('pragmatic programmer', function(error, results){
@@ -63,8 +63,8 @@ describe('Results', function(){
     done();
   });
   it('a result should have a publication date',function(done){
-    this.aResult.should.have.property('publication');
-    this.aResult.publication.should.be.a.Date;
+    this.aResult.should.have.property('publicationDate');
+    this.aResult.publicationDate.should.be.a.Date;
     done();
   });
   it('a result should have an edition number',function(done){
