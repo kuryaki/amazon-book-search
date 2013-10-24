@@ -4,6 +4,7 @@ var app = require('../app');
 var should = require('should');
 
 describe('Search', function() {
+  this.timeout(5000);
 
   it('should exist and not be empty', function(done){
     app.search('Some weird results', function(error, results){
@@ -14,7 +15,16 @@ describe('Search', function() {
     });
   });
 
-  it('results should have result objects', function(done){
+  it('should return an 0 results if something went wrong', function(done){
+    app.search('-', function(error, results){
+      assert(results);
+      results.should.be.an.Array;
+      results.should.be.empty;
+      done(error, results);
+    });
+  });
+
+  it('results should be an array with result objects', function(done){
     app.search('pragmatic programmer', function(error, results){
       var aResult = results[0];
 
