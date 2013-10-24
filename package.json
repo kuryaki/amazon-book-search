@@ -1,0 +1,14 @@
+{
+  "name": "code-challenge",
+  "version": "0.0.10",
+  "description": "Code Challenge",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --ui tdd --reporter spec"
+  },
+  "author": "David Roncancio",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "should": "~2.0.2"
+  }
+}
