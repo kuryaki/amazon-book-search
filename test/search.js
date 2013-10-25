@@ -1,5 +1,5 @@
 var assert = require('assert');
-var app = require('../app');
+var search = require('../search');
 
 var should = require('should');
 
@@ -7,7 +7,7 @@ describe('Search', function() {
   this.timeout(5000);
 
   it('should exist and not be empty', function(done){
-    app.search('Some weird results', function(error, results){
+    search.search('Some weird results', function(error, results){
       assert(results);
       results.should.be.an.Array;
       results.should.not.be.empty;
@@ -16,7 +16,7 @@ describe('Search', function() {
   });
 
   it('should return an 0 results if something went wrong', function(done){
-    app.search('-', function(error, results){
+    search.search('-', function(error, results){
       assert(results);
       results.should.be.an.Array;
       results.should.be.empty;
@@ -25,7 +25,7 @@ describe('Search', function() {
   });
 
   it('results should be an array with result objects', function(done){
-    app.search('pragmatic programmer', function(error, results){
+    search.search('pragmatic programmer', function(error, results){
       var aResult = results[0];
 
       assert(aResult);
@@ -41,7 +41,7 @@ describe('Search', function() {
 describe('Results,', function(){
   before(function(done){
     var self = this;
-    app.search('pragmatic programmer', function(error, results){
+    search.search('pragmatic programmer', function(error, results){
       self.aResult = results[0];
       done();
     });

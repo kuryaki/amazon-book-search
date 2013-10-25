@@ -1,8 +1,8 @@
 {
-  "name": "code-challenge",
+  "name": "amazon-book-search",
   "version": "0.0.10",
   "description": "Code Challenge",
-  "main": "app.js",
+  "main": "search.js",
   "scripts": {
     "test": "mocha --ui tdd --reporter spec"
   },
