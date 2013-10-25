@@ -1,5 +1,5 @@
 var assert = require('assert');
-var search = require('../search');
+var amazon = require('../.');
 
 var should = require('should');
 
@@ -7,7 +7,7 @@ describe('Search', function() {
   this.timeout(5000);
 
   it('should exist and not be empty', function(done){
-    search.search('Some weird results', function(error, results){
+    amazon.search('Some weird results', function(error, results){
       assert(results);
       results.should.be.an.Array;
       results.should.not.be.empty;
@@ -15,8 +15,8 @@ describe('Search', function() {
     });
   });
 
-  it('should return an 0 results if something went wrong', function(done){
-    search.search('-', function(error, results){
+  it('should return a 0 results if something went wrong', function(done){
+    amazon.search('-', function(error, results){
       assert(results);
       results.should.be.an.Array;
       results.should.be.empty;
@@ -25,7 +25,7 @@ describe('Search', function() {
   });
 
   it('results should be an array with result objects', function(done){
-    search.search('pragmatic programmer', function(error, results){
+    amazon.search('pragmatic programmer', function(error, results){
       var aResult = results[0];
 
       assert(aResult);
@@ -41,7 +41,7 @@ describe('Search', function() {
 describe('Results,', function(){
   before(function(done){
     var self = this;
-    search.search('pragmatic programmer', function(error, results){
+    amazon.search('pragmatic programmer', function(error, results){
       self.aResult = results[0];
       done();
     });
