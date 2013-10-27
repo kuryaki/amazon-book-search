@@ -1,10 +1,10 @@
 var express = require('express');
 var app = express();
-var amazonMiddleware =  require('../.').middleware;
+var abs = require('../.');
 
-// app.use(express.logger('dev'));
+abs.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
 
-app.get('/search',amazonMiddleware());
+app.get('/search',abs.middleware());
 
 app.listen(3000);
 

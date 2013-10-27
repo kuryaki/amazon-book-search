@@ -5,7 +5,7 @@ This allows you to find on amazon product api for books, usage
 
   npm install amazon-book-search
 
-  var abs = require('amazon-book-search');
+  var abs = require('amazon-book-search')('awsKey','awsSecret');
 
   abs.search('your thoughts on books', function(error, responses){
     console.log(responses);

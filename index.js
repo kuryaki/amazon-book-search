@@ -1,4 +1,4 @@
-var amazon = require('./lib/amazon')('AKIAI6HXKAF4PMFLG65A', 'W75HoO0KQ6Seh/cBK1O/zIhSPPBbaePMWlRY0Ivh');
+var amazon = require('./lib/amazon');
 var humanizer = require('./lib/humanizer');
 
 /**
@@ -6,7 +6,9 @@ var humanizer = require('./lib/humanizer');
  * @param  {[type]}   searchArguments [The Search query, in a string form, example 'how to become a programmer']
  * @param  {Function} callback        [in the form function(error, results){}]
  */
-var search = module.exports.search = function search(searchArguments, callback) {
+module.exports.search = function search(searchArguments, callback) {
+  if(!this.configured){callback({message:'Not Properly Configured'},null);return;}
+  if(!searchArguments){searchArguments='';}
   // TODO
   // -> End the request and force error response if it exceedes some timeout
   // -> Cache this request to answer faster or with cached results in case of timeout
@@ -17,15 +19,29 @@ var search = module.exports.search = function search(searchArguments, callback) 
 
 };
 
+/**
+ * Use this book search as a connect like middleware
+ * @return {[type]} [description]
+ */
 module.exports.middleware = function searchMiddleware(){
+  var self = this;
   return function(req, res, next){
-    search(req.query.q, function(error, results){
+    self.search(req.query.q, function(error, results){
       if(error){
-        next(error);
+        res.send(400, error);
         return false;
       };
       res.send(200, results);
       res.end();
     });
   };
+}
+
+module.exports.configure = function configure(settings){
+  if(settings.awsKey && settings.awsSecret){
+    amazon.configure(settings);
+    this.configured = true;
+  }else{
+    this.configured = false;
+  }
 }

@@ -1,32 +1,92 @@
 var assert = require('assert');
-var amazon = require('../.');
-
 var should = require('should');
+//awsKey 'AKIAI6HXKAF4PMFLG65A'
+//awsSecret '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'
 
-describe('Search', function() {
-  this.timeout(5000);
+describe('Configure', function(){
+  before(function(done){
+    this.timeout(5000);
+    this.abs = require('../.');
+    done();
+  });
 
-  it('should exist and not be empty', function(done){
-    amazon.search('Some weird results', function(error, results){
+  it('should not work if not configured', function(done){
+    // some how this test fails when the whole test suite runs i think im doing something wrong loading the modules
+    // i figured it out that the amazon module should properly encapsulate the settings to prevent a request.cache leak
+    this.abs.search('Wizard of OZ', function(error, results){
+      assert(error);
+      error.should.be.an.Object;
+      should.exists(error.message);
+      done();
+    });
+  });
+  it('should not work if configuration misses key or secret', function(done){
+    this.abs.configure({awsKey:'badAwsKey'});
+    this.abs.search('Wizard of OZ', function(error, results){
+      assert(error);
+      error.should.be.an.Object;
+      should.exists(error.message);
+      done();
+    });
+  });
+  it('should not work if apiKey is broken', function(done){
+    this.abs.configure({awsKey:'badAwsKey',awsSecret:'W75HoO0KQ6Seh/cBK1O/zIhSPPBbaePMWlRY0Ivh'});
+    this.abs.search('Wizard of OZ', function(error, results){
+      assert(error);
+      error.should.be.an.Object;
+      should.exists(error.message);
+      done();
+    });
+  });
+  it('should not work if apiSecret is broken', function(done){
+    this.abs.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'badSecret'});
+    this.abs.search('Wizard of OZ', function(error, results){
+      assert(error);
+      error.should.be.an.Object;
+      should.exists(error.message);
+      done();
+    });
+  });
+  it('should work if properly configured', function(done){
+    this.abs.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
+    this.abs.search('Wizard of OZ', function(error, results){
       assert(results);
       results.should.be.an.Array;
-      results.should.not.be.empty;
-      done(error, results);
+      done();
+    });
+  });
+});
+
+
+describe('Search', function() {
+  before(function(done){
+    this.timeout(5000);
+    this.abs = require('../.');
+    this.abs.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
+    done();
+  });
+
+  it('should exist and not be empty', function(done){
+    this.abs.search('Some weird results', function(error, response){
+      assert(response.results);
+      response.results.should.be.an.Array;
+      response.results.should.not.be.empty;
+      done(error, response.results);
     });
   });
 
   it('should return a 0 results if something went wrong', function(done){
-    amazon.search('-', function(error, results){
-      assert(results);
-      results.should.be.an.Array;
-      results.should.be.empty;
-      done(error, results);
+    this.abs.search('-', function(error, response){
+      assert(response.results);
+      response.results.should.be.an.Array;
+      response.results.should.be.empty;
+      done(error, response.results);
     });
   });
 
   it('results should be an array with result objects', function(done){
-    amazon.search('pragmatic programmer', function(error, results){
-      var aResult = results[0];
+    this.abs.search('pragmatic programmer', function(error, response){
+      var aResult = response.results[0];
 
       assert(aResult);
       aResult.should.be.an.Object;
@@ -40,9 +100,12 @@ describe('Search', function() {
 
 describe('Results,', function(){
   before(function(done){
+    this.timeout(5000);
+    this.abs = require('../.');
+    this.abs.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
     var self = this;
-    amazon.search('pragmatic programmer', function(error, results){
-      self.aResult = results[0];
+    this.abs.search('pragmatic programmer', function(error, response){
+      self.aResult = response.results[0];
       done();
     });
   });
@@ -88,3 +151,4 @@ describe('Results,', function(){
     done();
   });
 });
+

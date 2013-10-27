@@ -9,6 +9,7 @@ describe('Amazon JSON transformation', function(){
 
   before(function(done){
     var self = this;
+    amazon.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
     amazon.query('pragmatic programmer', function(error, originalResults){
       self.originalResults = originalResults;
       humanizer.transformResults(originalResults, function(error, results){
