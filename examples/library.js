@@ -1,8 +1,8 @@
-var abs = require('../.');
+var ABS = require('../.');
 
-// abs.configure({awsKey:'awsKey',awsSecret:'awsSecret'});
+var abs = new ABS({awsKey:process.argv[2],awsSecret:process.argv[3]});
 abs.configure({awsKey:process.argv[2],awsSecret:process.argv[3]});
 
-abs.search('your thoughts on books', function(error, responses){
-  console.log(responses);
+abs.search('your thoughts on books', function(error, response){
+  console.log(response.results);
 });

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var amazon = require('../lib/amazon');
+var Amazon = require('../lib/amazon');
 var humanizer = require('../lib/humanizer');
 
 var should = require('should');
@@ -9,11 +9,11 @@ describe('Amazon JSON transformation', function(){
 
   before(function(done){
     var self = this;
-    amazon.configure({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
-    amazon.query('pragmatic programmer', function(error, originalResults){
-      self.originalResults = originalResults;
-      humanizer.transformResults(originalResults, function(error, results){
-        self.results = results;
+    self.amazon = new Amazon({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'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'});
+    self.amazon.query('pragmatic programmer', function(error, originalResponse){
+      self.originalResults = originalResponse.results;
+      humanizer.transformResults(originalResponse, function(error, response){
+        self.results = response.results;
         done();
       });
     });

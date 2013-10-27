@@ -12,8 +12,8 @@ describe('API', function(){
       .get('/search')
       .expect(200)
       .end(function(error, response){
-        response.body.should.be.an.Array;
-        response.body.should.be.empty;
+        response.body.results.should.be.an.Array;
+        response.body.results.should.be.empty;
         done(); 
       });
   });
@@ -23,13 +23,22 @@ describe('API', function(){
       .get('/search?'+query)
       .expect(200)
       .end(function(error, response){
-        response.body.should.be.an.Array;
-        response.body.should.not.be.empty;
+        response.body.results.should.be.an.Array;
+        response.body.results.should.not.be.empty;
         done();
       });
   });
 
-  it('should resolve depending on content/type, ex. html, json');
-  it('should show next pages of results');
+  it('should show next pages of results', function(done){
+    var query = qs.stringify({q:'primus', page:'2'});
+    request(this.api)
+      .get('/search?'+query)
+      .expect(200)
+      .end(function(error, response){
+        response.body.results.should.be.an.Array;
+        response.body.results.should.not.be.empty;
+        done();
+      });
+  });
 
 });
