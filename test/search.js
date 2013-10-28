@@ -178,17 +178,12 @@ describe('Results,', function(){
   });
   it('a result should have an edition number',function(done){
     this.aResult.should.have.property('edition');  // If not avaliable should be 0
-    this.aResult.edition.should.be.a.Number;
+    this.aResult.edition.should.be.a.String;
     done();
   });
   it('a result should have a price',function(done){
     this.aResult.should.have.property('price');
-    this.aResult.price.should.be.a.Number;
-    done();
-  });
-  it('a result should have a currency',function(done){
-    this.aResult.should.have.property('currency');
-    this.aResult.currency.should.be.a.String;
+    this.aResult.price.should.be.a.String;
     done();
   });
   it('a result should have a format',function(done){

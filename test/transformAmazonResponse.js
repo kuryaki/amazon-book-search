@@ -59,21 +59,13 @@ describe('Amazon JSON transformation', function(){
     var anOriginalResult = this.originalResults[0];
     var transformedResult = humanizer.transform(anOriginalResult);
     transformedResult.should.have.property('edition');
-    transformedResult.edition.should.be.equal(parseInt(anOriginalResult.ItemAttributes[0].Edition[0]));
     done();
   });
   it('original price should be equal to the transformed price', function(done){
     var anOriginalResult = this.originalResults[0];
     var transformedResult = humanizer.transform(anOriginalResult);
     transformedResult.should.have.property('price');
-    transformedResult.price.should.be.equal(parseInt(anOriginalResult.ItemAttributes[0].ListPrice[0].Amount[0]));
-    done();
-  });
-  it('original currency should be equal to the transformed currency', function(done){
-    var anOriginalResult = this.originalResults[0];
-    var transformedResult = humanizer.transform(anOriginalResult);
-    transformedResult.should.have.property('currency');
-    transformedResult.currency.should.be.equal(anOriginalResult.ItemAttributes[0].ListPrice[0].CurrencyCode[0]);
+    transformedResult.price.should.be.equal(anOriginalResult.ItemAttributes[0].ListPrice[0].FormattedPrice[0]);
     done();
   });
   it('original format should be equal to the transformed format', function(done){

@@ -7,10 +7,12 @@ var abs = new ABS({awsKey:'AKIAI6HXKAF4PMFLG65A',awsSecret:'W75HoO0KQ6Seh/cBK1O/
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.logger('dev'));
+app.use(express.static(__dirname + '/search-ui'));
+app.set('port', process.env.PORT || 3000);
 app.get('/search',abs.middleware());
 
-app.listen(3000);
+app.listen(app.get('port'));
 
-console.log('Go to http://localhost:3000/search, try http://localhost:3000/search?q=porn or more at http://localhost:3000/search?q=porn&page=2');
+console.log('Listening at port '+app.get('port'));
 
 module.exports = app;
