@@ -33,8 +33,7 @@ There is a maximum of 10 pages returned by Amazon so only 100 products will be d
     var express = require('express');
     var app = express();
     var Amazon =  require('amazon-book-search');
-    var abs = new Amazon({awsKey:'AKIAI6HXKAF4PMFLG65A', awsSecret:'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'});
-
+    
     app.get('/search',abs.middleware());
     app.listen(3000);
 
